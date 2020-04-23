@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "";
+    var documentinfo = (List<ArticleContent>)ViewBag.DocumentList;
+    var DocumentFList = (List<ArticleContent>)ViewBag.DocumentFList;
+}
+<!-- banner部分 -->
+<div class="banner case">
+    <div class="title">
+        <p>投资项目</p> 
+    </div>
+</div>
+<!-- main部分 -->
+<div class="main-case">
+    <div class="layui-container">
+        <div class="layui-row">
+            <p class="title" style="font-size: 30px;">未来社区类</p>
+            @{int i = 1;}
+            @foreach (var item in documentinfo)
+            {
+                <div class="@(i%2==2?"layui-inline content even center":"layui-inline content")">
+                    <div class="layui-inline case-img"><img style="width:300px;height:200px" src="@item.Image"></div>
+                    <a href="/Construction/Details?id=@item.Id">
+                        <p class="lable">@item.Title</p>
+                        <p>@item.Abstract</p>
+                    </a>
+                </div>
+                i++;
+            }
+        </div>
+        <div class="layui-row" style="margin-top:60px">
+            <p class="title" style="font-size: 30px;">文旅类</p>
+            @{int ii = 1;}
+            @foreach (var item in DocumentFList)
+            {
+                <div class="@(ii%2==2?"layui-inline content even center":"layui-inline content")">
+                    <div class="layui-inline case-img"><img style="width:300px;height:200px" src="@item.Image"></div>
+                    <a href="/Construction/Details?id=@item.Id">
+                        <p class="lable">@item.Title</p>
+                        <p>@item.Abstract</p>
+                    </a>
+                </div>
+                ii++;
+            }
+        </div>
+    </div>
+</div>

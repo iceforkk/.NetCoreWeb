@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "";
+    var newlist = (List<ArticleContent>)ViewBag.NewsList;
+    var TList = (List<ArticleContent>)ViewBag.ZList;
+    var Banner = (List<ArticleContent>)ViewBag.Banner;
+}
+<!-- banner部分 -->
+<div class="layui-carousel" id="banner">
+    <div carousel-item style="margin-top:79px">
+        @foreach (var item in Banner)
+        {
+            <div>
+                <img style="width:100%" src="@item.Image" />
+                <div class="panel">
+                    <p class="title"></p>
+                    <p></p>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+<div class="main-product">
+    <div class="layui-container">
+        <p class="title">投资项目</p>
+        <div class="layui-row layui-col-space25">
+            @foreach (var item in TList)
+            {
+            <div class="layui-col-sm6 layui-col-md3">
+                <div class="content" style="height:300px">
+                    <div style="width:200px;height:100px">
+                        <img style="width:260px;height:140px" src="@item.Image" />
+                    </div>
+                    <div style="margin-top:30px">
+                        <p class="label">@item.Title</p>
+                        <p>@item.Abstract</p>
+                    </div>
+                    <a href="/Construction/Details?id=@item.Id">查看项目 ></a>
+                </div>
+            </div>
+            } 
+        </div>
+        <div style="padding: 10px 62px;font-size: 23px;line-height: 35px;color: #382929;background: #7fd3c6;border-radius: 3px;width: 100px;margin-top: 33px;margin-left: 490px;"><a style="color: white;" href="/Construction">查看更多</a></div>
+    </div>
+</div>
+<div class="main-service">
+    <div class="layui-container">
+        <p class="title">公司新闻</p>
+        <div class="layui-row layui-col-space25 layui-col-space80">
+            @foreach(var item in newlist)
+            {
+            <div class="layui-col-sm6">
+                <a href="/News/Details?id=@item.Id">
+                    <div class="content">
+                        <div class="content-left">
+                            <img style="height:280px" src="@item.Image" />
+                        </div>
+                        <div class="content-right">
+                            <p class="label">@item.Title</p>
+                            <span></span>
+                            <p>@item.Abstract</p>
+                        </div>
+                    </div>
+                </a>
+            </div> 
+            }
+        </div>
+        <div class="service-more"><a href="/News?id=5">查看更多</a></div>
+    </div>
+</div>

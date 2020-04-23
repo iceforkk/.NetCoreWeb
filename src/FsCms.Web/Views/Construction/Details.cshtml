@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "";
+    var documentinfo = (ArticleContent)ViewBag.Document;
+}
+
+
+<div class="banner product">
+    <div class="title">
+        <p>投资项目</p>
+        <p class="en"></p>
+    </div>
+</div>
+<!-- main部分 -->
+<div class="main-newsdate">
+    <div class="layui-container">
+        <p class="news"><a href="/Construction">投资项目</a> > 项目详情</p>
+        <h1>@documentinfo.Title</h1>
+        <p class="pushtime">发布时间：<span>@documentinfo.CreateDt</span></p>
+        @Html.Raw(documentinfo.DocContent);
+    </div>
+</div>

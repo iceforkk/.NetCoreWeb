@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "";
+    var documentinfo = (List<ArticleContent>)ViewBag.DocumentList;
+    var listCount = Convert.ToInt64(ViewData["ListCount"]);
+    var typeId = Convert.ToInt32(ViewData["TypeID"]);
+    var typeName = ViewData["TypeName"];
+    var showType = ViewData["ShowType"];
+}
+<!-- banner部分 -->
+<div class="banner news">
+    <div class="title">
+        <p>@(showType == "3" ? "联系我们" : typeName)</p>
+        <p class="en"></p>
+    </div>
+</div>
+<!-- main -->
+<div class="main-news">
+    <div class="layui-container">
+        <div class="layui-row layui-col-space20" id="newsList">
+            @if (showType == "1")
+            {
+                foreach (var item in documentinfo)
+                {
+                    <div class="layui-col-lg6 content">
+                        <div>
+                            <div class="news-img"><img style="width:182px;height:140px" src="@item.Image" /></div><div class="news-panel">
+                                <strong><a href="/news/details?id=@item.Id">@item.Title</a></strong>
+                                <p class="detail"><span>@item.Abstract</span><a href="/news/details?id=@item.Id">[详细]</a></p>
+                                <p class="read-push">阅读 <span>@item.WatchCount</span>&nbsp;&nbsp;&nbsp;&nbsp;发布时间：<span>@item.CreateDt.ToString()</span></p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else if (showType == "2")
+            {
+                <div class="layui-col-lg12 content">
+                    @foreach (var item in documentinfo)
+                    { 
+                        <div>
+                            <div class="news-title">
+                                <strong><a href="/news/details?id=@item.Id" title="@item.Title">@item.Title</a></strong>
+                            </div>
+                            <div class="news-time">
+                                <p class="read-push"><span>@item.CreateDt.ToString()</span></p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else if (showType == "3")
+            {
+                <div class="layui-col-lg12 content">
+                    <div style="border-bottom: none;">
+                        <div class="news-location"><img src="~/lib/static/img/location.png"></div>
+                        <div class="news-contact">
+                            <br /><br />
+                            <p>地址  浙江省杭州市上城区飞云江路9号赞成中心东13楼</p><br />
+                            <p>电话  +86 0571 89980787</p><br />
+                            <p>传真  +86 0571 89980798</p><br />
+                            <p>邮箱  business_develop@enjoytown.net</p><br />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @if (showType == "1" || showType == "2")
+        {
+            <div style="text-align:center">
+                <div id="newsPage1"></div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (showType == "1" || showType == "2")
+{
+    @section Scripts{
+        <script>
+            layui.use(['laypage', 'jquery'], function () {
+                var laypage = layui.laypage;
+                var $ = layui.$;
+
+                laypage.render({
+                    elem: 'newsPage1'
+                    , count: @listCount
+                    , limit: 10
+                    , jump: function (obj, first) {
+                        page = obj.curr;
+                        limit = obj.limit;
+                        if (!first) {
+                            loadData()
+                        }
+                    }
+                });
+
+                function loadData() {
+                    $.ajax({
+                        type: "post",
+                        url: "/news/ArticleContentList",
+                        async: false,
+                        dataType: 'json',
+                        data: {
+                            "id": @typeId,
+                            "page": page,
+                            "count": limit,
+                        },
+                        success: function (ret) {
+                            total = ret.total;
+                            var data1 = ret.data;
+                            var html = '';
+                            for (var i = 0; i < data1.length; i++) {
+                                if(@showType == "1")
+                                {
+                                    html += '<div class="layui-col-lg6 content">';
+                                    html += '<div>';
+                                    html += '<div class="news-img"><img style="width:182px;height:140px" src="' + data1[i].Image + '"/></div><div class="news-panel">';
+                                    html += '<strong><a href="/news/details?id=' + data1[i].Id + '">' + data1[i].Title + '</a></strong>';
+                                    html += '<p class="detail"><span>' + data1[i].Abstract + '</span><a href="/news/details?id=' + data1[i].Id + '">[详细]</a></p>';
+                                    html += '<p class="read-push">阅读 <span>' + data1[i].WatchCount + '</span>&nbsp;&nbsp;&nbsp;&nbsp;发布时间：<span>' + data1[i].CreateDt + '</span></p>';
+                                    html += ' </div>';
+                                    html += ' </div>';
+                                    html += ' </div>';
+                                }
+                                else if (@showType == "2")
+                                {
+                                    html += '<div class="layui-col-lg12 content">';
+                                    html += '<div>';
+                                    html += '<div class="news-title">';
+                                    html += '<strong><a href="/news/details?id=' + data1[i].Id + '" title="' + data1[i].Title + '">' + data1[i].Title + '</a></strong>';
+                                    html += '</div>';
+                                    html += '<div class="news-time">';
+                                    html += '<p class="read-push"><span>' + data1[i].CreateDt + '</span></p>';
+                                    html += '</div>';
+                                    html += '</div>';
+                                    html += '</div>';
+                                }
+                            }
+                            $("#newsList").empty().append(html);
+
+                        }
+                    });
+                }
+            });
+        </script>
+    }
+}

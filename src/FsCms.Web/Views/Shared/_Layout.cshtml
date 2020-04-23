@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+    <title>之江文旅产业基金</title>
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/lib/static/css/index.css" rel="stylesheet" />
+</head>
+<body>
+    @Html.Action("Header", "Home")
+    <!-- main部分 -->
+    @RenderBody()
+    <!-- footer部分 -->
+    <div class="footer">
+        <div class="layui-container">
+            <p class="footer-web">
+
+            </p>
+            <div class="layui-row footer-contact">
+                <div class="layui-col-sm2 layui-col-lg1">
+                    @*<img style="width:80px;height:80px" src="~/lib/static/img/u82.png" />*@
+                </div>
+                <div class="layui-col-sm10 layui-col-lg11">
+                    <div class="layui-row">
+                        <div class="layui-col-sm6 layui-col-md8 layui-col-lg9">
+                            <p class="contact-top"><i class="layui-icon layui-icon-cellphone"></i>&nbsp;电话：+86 0571 89980787&nbsp;&nbsp;&nbsp;(9:00-18:00)</p>
+                            <p class="contact-bottom"><i class="layui-icon layui-icon-home"></i>&nbsp;传真：+86 0571 89980798</p>
+                            <p class="contact-bottom"><i class="layui-icon layui-icon-home"></i>&nbsp;邮箱：business_develop@enjoytown.net</p>
+                        </div>
+                        <div class="layui-col-sm6 layui-col-md4 layui-col-lg3">
+                            <p class="contact-top"><span class="right">该网站由 <a href="" target="_blank">七彩安科</a> 官方出品</span></p>
+                            <p class="contact-bottom"><span class="right">Copyright&nbsp;©&nbsp;2016-2018&nbsp;&nbsp;ICP&nbsp;备888888号</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/layui/layui.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        layui.config({
+            base: '../lib/static/js/'
+        }).use('firm');
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
